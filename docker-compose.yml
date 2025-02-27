@@ -1,0 +1,51 @@
+version: '3.8'
+services:
+    db:
+        platform: linux/x86_64
+        image: mysql:8.0
+        container_name: Database
+        env_file:
+            -   .env
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: root
+        volumes:
+            - ./db:/var/lib/mysql
+        ports:
+            - 3306:3306
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: PhpMyAdmin
+        links:
+            - db
+            
+        environment:
+            PMA_HOST: db
+            PMA_PORT: 3306
+            PMA_ARBITRARY: 1
+            PMA_USER: root
+            PMA_PASSWORD: root
+        restart: always
+        ports:
+            - 8081:80
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - .:/var/www/html
+        ports:
+            - "8080:80"
+        environment:
+            - APACHE_DOCUMENT_ROOT=/var/www/html/public
+        depends_on:
+            - db
+networks:
+    laravel-exa:
+        driver: bridge
+
+volumes:
+    db:
+        driver: local
