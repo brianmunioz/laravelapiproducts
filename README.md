@@ -1,8 +1,7 @@
 
 # API REST para la gestión de stock de productos
 
-Esta API REST esta diseñada para como aplicación interna de una empresa con depósito.
-Cuenta con 3 roles: client, office, admin.
+Esta API REST esta diseñada para como aplicación interna de una empresa con depósito
 
 ## Tecnologías Utilizadas
 
@@ -28,6 +27,11 @@ Ejecutar migraciones y crear usuario admin
 ```bash
   docker compose exec app php artisan migrate --seed
 ```
+## Usuario por defecto
+
+Email: admin@example.com
+Password: password
+
 
 ## Diagrama entidad-relación
 
