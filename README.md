@@ -13,10 +13,22 @@ Cuenta con 3 roles: client, office, admin.
 
 ## Despliegue del proyecto
 
+Una vez clonado el directorio, dirigirse a la carpeta del proyect
+
 ```bash
-  docker compose up -d
-  docker compose exec app php artisan migrate
+  cd laravelapiproductos
 ```
+Para correr el proyecto recomiendo usar el siguiente comando, o por defecto puedes construir el proyecto primero y luego correrlo.
+
+```bash
+  docker compose up -d --build
+```
+Ejecutar migraciones y crear usuario admin
+
+```bash
+  docker compose exec app php artisan migrate --seed
+```
+
 ## Diagrama entidad-relación
 
 ![Diagrama entidad-relación](./UML/ENTIDAD-RELACION.webp)
