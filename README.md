@@ -16,7 +16,7 @@ Cuenta con 3 roles: client, office, admin.
 Una vez clonado el directorio, dirigirse a la carpeta del proyect
 
 ```bash
-  cd laravelapiproductos
+  cd laravelapiproducts
 ```
 Para correr el proyecto recomiendo usar el siguiente comando, o por defecto puedes construir el proyecto primero y luego correrlo.
 
