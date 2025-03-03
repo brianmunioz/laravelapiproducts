@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsUserAuth;
@@ -9,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 //rutas publicas
 
 Route::post('login',[AuthController::class, 'login']);
+Route::post('upload',[ImagesController::class, 'uploadImage']);
+
 Route::middleware([IsUserAuth::class])->group(function (){
     Route::controller(AuthController::class)->group(function(){
         Route::post('logout','logout');

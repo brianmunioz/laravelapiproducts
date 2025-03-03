@@ -12,6 +12,8 @@ class ProductController extends Controller
         $validator = Validator::make($request->all(),[
             "name"=> "required|string|min:10|max:100",
             "price"=>"required|numeric",
+            "quantity"=>"required|numeric",
+            "variant"=>"required|string"
         ]);
         if($validator->fails()){
             return response()->json(['error'=>$validator->errors()],422);
@@ -19,7 +21,8 @@ class ProductController extends Controller
         Product::create([
             "name"=>$request->get("name"),
             "price"=>$request->get("price"),
-            
+            "quantity"=>$request->get("quantity"),
+            "variant"=>$request->get("variant")            
         ]);
         return response()->json(['message'=>'Product added successfully'],201);
     }
