@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -14,17 +15,27 @@ class AuthController extends Controller
     public function register(Request $request){
         
         $validator = Validator::make($request->all(),[
-            "name"=> "required|string|min:10|max:100",
+            "name"=> "required|string|min:3|max:100",
             "email"=>"required|string|email|min:10|max:70|unique:users",
-            "password"=>"required|string|min:10|confirmed"
+            "password"=>["required","string","confirmed",
+            Password::min(10)
+            ->letters()
+            ->mixedCase()
+            ->numbers()
+            ->symbols()],
+            "role"=>"required|string"
         ]);
         if($validator->fails()){
             return response()->json(['error'=>$validator->errors()],422);
         }
+        if($request->get('role')!= "admin" && $request->get('role')!= "client"){
+            return response()->json(["message"=>"El rol solo puede ser admin o client"],400);
+        }
+        
         User::create(
             [
                 'name'=>$request->get('name'),
-                'role'=>'client',
+                'role'=>$request->get('role'),
                 'email'=>$request->get('email'),
                 'password'=>bcrypt($request->get('password'))
             ]
